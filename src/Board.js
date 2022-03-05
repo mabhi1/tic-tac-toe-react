@@ -15,12 +15,30 @@ import Square from './Square';
 
 function Board() {
   const [player, setPlayer] = useState('X');
+  const [reset, setReset] = useState(false);
+  let moves = {
+    X: [],
+    0: [],
+  };
+  const winner = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+    [1, 4, 7],
+    [2, 5, 8],
+    [3, 6, 9],
+    [1, 5, 9],
+    [3, 5, 7],
+  ];
   function switchPlayer() {
     if (player === 'X') {
       setPlayer('0');
     } else {
       setPlayer('X');
     }
+  }
+  function calculate(val) {
+    moves[player].append(val);
   }
   return (
     <Box overflow="hidden">
@@ -30,43 +48,98 @@ function Board() {
         </Text>
         <VStack>
           <HStack>
-            <Square player={player} switchPlayer={switchPlayer} />
+            <Square
+              player={player}
+              switchPlayer={switchPlayer}
+              reset={reset}
+              setReset={setReset}
+              setPlayer={setPlayer}
+              onClick={() => calculate(1)}
+            />
             <Center height="50px">
               <Divider orientation="vertical" />
             </Center>
-            <Square player={player} switchPlayer={switchPlayer} />
+            <Square
+              player={player}
+              switchPlayer={switchPlayer}
+              reset={reset}
+              setReset={setReset}
+              setPlayer={setPlayer}
+            />
             <Center height="50px">
               <Divider orientation="vertical" />
             </Center>
-            <Square player={player} switchPlayer={switchPlayer} />
+            <Square
+              player={player}
+              switchPlayer={switchPlayer}
+              reset={reset}
+              setReset={setReset}
+              setPlayer={setPlayer}
+            />
           </HStack>
         </VStack>
         <Divider orientation="horizontal" mx="auto" width="180px" />
         <VStack>
           <HStack>
-            <Square player={player} switchPlayer={switchPlayer} />
+            <Square
+              player={player}
+              switchPlayer={switchPlayer}
+              reset={reset}
+              setReset={setReset}
+              setPlayer={setPlayer}
+            />
             <Center height="50px">
               <Divider orientation="vertical" />
             </Center>
-            <Square player={player} switchPlayer={switchPlayer} />
+            <Square
+              player={player}
+              switchPlayer={switchPlayer}
+              reset={reset}
+              setReset={setReset}
+              setPlayer={setPlayer}
+            />
             <Center height="50px">
               <Divider orientation="vertical" />
             </Center>
-            <Square player={player} switchPlayer={switchPlayer} />
+            <Square
+              player={player}
+              switchPlayer={switchPlayer}
+              reset={reset}
+              setReset={setReset}
+              setPlayer={setPlayer}
+            />
           </HStack>
         </VStack>
         <Divider orientation="horizontal" mx="auto" width="180px" />
         <VStack>
           <HStack>
-            <Square player={player} switchPlayer={switchPlayer} />
+            <Square
+              player={player}
+              switchPlayer={switchPlayer}
+              reset={reset}
+              setReset={setReset}
+              setPlayer={setPlayer}
+            />
             <Center height="50px">
               <Divider orientation="vertical" />
             </Center>
-            <Square player={player} switchPlayer={switchPlayer} />
+            <Square
+              player={player}
+              switchPlayer={switchPlayer}
+              reset={reset}
+              setReset={setReset}
+              setPlayer={setPlayer}
+            />
             <Center height="50px">
               <Divider orientation="vertical" />
             </Center>
-            <Square player={player} switchPlayer={switchPlayer} />
+            <Square
+              player={player}
+              switchPlayer={switchPlayer}
+              reset={reset}
+              setReset={setReset}
+              setPlayer={setPlayer}
+            />
           </HStack>
         </VStack>
       </Box>
@@ -86,7 +159,12 @@ function Board() {
         </Badge>
         <Spacer />
       </Flex>
-      <Button m="5" size="md" fontFamily="monospace">
+      <Button
+        m="5"
+        size="md"
+        fontFamily="monospace"
+        onClick={() => setReset(true)}
+      >
         Reset
       </Button>
     </Box>
