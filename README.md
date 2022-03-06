@@ -1,3 +1,7 @@
+## Deployed
+
+The project is deployed at https://start-tic-tac-toe.netlify.app/.
+
 ## Material Design
 
 Chakra UI is used for the material design.
