@@ -5,18 +5,24 @@ function Square(props) {
   const [turn, setTurn] = useState(undefined);
   useEffect(() => {
     function reset() {
-      if (props.reset) {
+      if (props.values.reset) {
         setTurn(undefined);
-        props.setReset(false);
-        props.setPlayer('X');
+        props.values.setReset(false);
+        props.values.setPlayer('X');
+        props.values.setWin(false);
+        props.values.setMoves({
+          X: [],
+          0: [],
+        });
       }
     }
     reset();
   }, [props]);
   function check() {
-    if (turn === undefined) {
-      setTurn(props.player);
-      props.switchPlayer();
+    if (turn === undefined && props.values.win === false) {
+      props.values.calculate(props.index);
+      setTurn(props.values.player);
+      props.values.switchPlayer();
     } else {
       return;
     }

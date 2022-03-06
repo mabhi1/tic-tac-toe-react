@@ -16,20 +16,23 @@ import Square from './Square';
 function Board() {
   const [player, setPlayer] = useState('X');
   const [reset, setReset] = useState(false);
-  let moves = {
+  const [win, setWin] = useState(false);
+  const [moves, setMoves] = useState({
     X: [],
     0: [],
-  };
+  });
   const winner = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    [1, 4, 7],
-    [2, 5, 8],
-    [3, 6, 9],
-    [1, 5, 9],
-    [3, 5, 7],
+    ['1', '2', '3'],
+    ['4', '5', '6'],
+    ['7', '8', '9'],
+    ['1', '4', '7'],
+    ['2', '5', '8'],
+    ['3', '6', '9'],
+    ['1', '5', '9'],
+    ['3', '5', '7'],
   ];
+  let props = undefined;
+
   function switchPlayer() {
     if (player === 'X') {
       setPlayer('0');
@@ -38,8 +41,37 @@ function Board() {
     }
   }
   function calculate(val) {
-    moves[player].append(val);
+    let count = 0;
+    moves[player].push(val);
+    moves[player].sort();
+    for (let i = 0; i < winner.length; i++) {
+      for (let j = 0; j < winner[i].length; j++) {
+        for (let k = 0; k < moves[player].length; k++) {
+          if (winner[i][j] === moves[player][k]) {
+            count += 1;
+            break;
+          }
+        }
+      }
+      if (count >= 3) {
+        setWin(true);
+        break;
+      } else {
+        count = 0;
+      }
+    }
   }
+  props = {
+    player: player,
+    switchPlayer: switchPlayer,
+    reset: reset,
+    setReset: setReset,
+    setPlayer: setPlayer,
+    calculate: calculate,
+    setWin: setWin,
+    setMoves: setMoves,
+    win: win,
+  };
   return (
     <Box overflow="hidden">
       <Box>
@@ -48,115 +80,63 @@ function Board() {
         </Text>
         <VStack>
           <HStack>
-            <Square
-              player={player}
-              switchPlayer={switchPlayer}
-              reset={reset}
-              setReset={setReset}
-              setPlayer={setPlayer}
-              onClick={() => calculate(1)}
-            />
+            <Square values={props} index="1" />
             <Center height="50px">
               <Divider orientation="vertical" />
             </Center>
-            <Square
-              player={player}
-              switchPlayer={switchPlayer}
-              reset={reset}
-              setReset={setReset}
-              setPlayer={setPlayer}
-            />
+            <Square values={props} index="2" />
             <Center height="50px">
               <Divider orientation="vertical" />
             </Center>
-            <Square
-              player={player}
-              switchPlayer={switchPlayer}
-              reset={reset}
-              setReset={setReset}
-              setPlayer={setPlayer}
-            />
+            <Square values={props} index="3" />
           </HStack>
         </VStack>
         <Divider orientation="horizontal" mx="auto" width="180px" />
         <VStack>
           <HStack>
-            <Square
-              player={player}
-              switchPlayer={switchPlayer}
-              reset={reset}
-              setReset={setReset}
-              setPlayer={setPlayer}
-            />
+            <Square values={props} index="4" />
             <Center height="50px">
               <Divider orientation="vertical" />
             </Center>
-            <Square
-              player={player}
-              switchPlayer={switchPlayer}
-              reset={reset}
-              setReset={setReset}
-              setPlayer={setPlayer}
-            />
+            <Square values={props} index="5" />
             <Center height="50px">
               <Divider orientation="vertical" />
             </Center>
-            <Square
-              player={player}
-              switchPlayer={switchPlayer}
-              reset={reset}
-              setReset={setReset}
-              setPlayer={setPlayer}
-            />
+            <Square values={props} index="6" />
           </HStack>
         </VStack>
         <Divider orientation="horizontal" mx="auto" width="180px" />
         <VStack>
           <HStack>
-            <Square
-              player={player}
-              switchPlayer={switchPlayer}
-              reset={reset}
-              setReset={setReset}
-              setPlayer={setPlayer}
-            />
+            <Square values={props} index="7" />
             <Center height="50px">
               <Divider orientation="vertical" />
             </Center>
-            <Square
-              player={player}
-              switchPlayer={switchPlayer}
-              reset={reset}
-              setReset={setReset}
-              setPlayer={setPlayer}
-            />
+            <Square values={props} index="8" />
             <Center height="50px">
               <Divider orientation="vertical" />
             </Center>
-            <Square
-              player={player}
-              switchPlayer={switchPlayer}
-              reset={reset}
-              setReset={setReset}
-              setPlayer={setPlayer}
-            />
+            <Square values={props} index="9" />
           </HStack>
         </VStack>
       </Box>
       <Flex mt="45">
         <Spacer />
-        <Badge
-          fontSize="0.7em"
-          colorScheme="purple"
-          mr="5"
-          width="180px"
-          padding="1"
-        >
-          Next Turn : X
-        </Badge>
-        <Badge fontSize="0.7em" colorScheme="green" width="180px" padding="1">
-          Winner is : X
-        </Badge>
+        {win ? (
+          <Badge fontSize="0.7em" colorScheme="green" width="180px" padding="1">
+            Winner is : {player === 'X' ? '0' : 'X'}
+          </Badge>
+        ) : (
+          <Badge
+            fontSize="0.7em"
+            colorScheme="purple"
+            width="180px"
+            padding="1"
+          >
+            Next Turn : {player}
+          </Badge>
+        )}
+
         <Spacer />
       </Flex>
       <Button
