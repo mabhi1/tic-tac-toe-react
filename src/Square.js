@@ -7,6 +7,7 @@ function Square(props) {
     function reset() {
       if (props.values.reset) {
         setTurn(undefined);
+        props.values.setLeft(true);
         props.values.setReset(false);
         props.values.setPlayer('X');
         props.values.setWin(false);

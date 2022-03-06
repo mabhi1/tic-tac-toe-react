@@ -21,6 +21,7 @@ function Board() {
     X: [],
     0: [],
   });
+  const [left, setLeft] = useState(true);
   const winner = [
     ['1', '2', '3'],
     ['4', '5', '6'],
@@ -38,6 +39,9 @@ function Board() {
       setPlayer('0');
     } else {
       setPlayer('X');
+    }
+    if (moves['X'].length + moves['0'].length === 9) {
+      setLeft(false);
     }
   }
   function calculate(val) {
@@ -71,6 +75,7 @@ function Board() {
     setWin: setWin,
     setMoves: setMoves,
     win: win,
+    setLeft: setLeft,
   };
   return (
     <Box overflow="hidden">
@@ -133,7 +138,7 @@ function Board() {
             width="180px"
             padding="1"
           >
-            Next Turn : {player}
+            {left ? 'Next Turn : ' + player : 'Draw! Press Reset'}
           </Badge>
         )}
 
